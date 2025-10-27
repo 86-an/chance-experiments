@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ガチャシミュレーション統計</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/gacha.css">
+</head>
+<body>
+    <!-- 統一ヘッダーの読み込み -->
+    <div id="header-placeholder"></div>
+    
+    <script>
+        // ヘッダーを動的に読み込み
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                // 現在のページにactiveクラスを追加
+                const currentPage = 'gacha.html';
+                const links = document.querySelectorAll('.nav-link');
+                links.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                        link.style.fontWeight = 'bold';
+                    }
+                });
+            });
+    </script>
+
+    <div class="container">
+        <h1>🎰 ガチャシミュレーション統計分析</h1>
+        
+        <div class="controls">
+            <h3>シミュレーション実行</h3>
+            <div class="button-group">
+                <button onclick="runSimulation(10)">10連×1回</button>
+                <button onclick="runSimulation(100)">10連×10回</button>
+                <button onclick="runSimulation(1000)">10連×100回</button>
+                <button onclick="runSimulation(10000)">10連×1000回</button>
+                <button onclick="runSimulation(100000)">10連×10000回</button>
+                <button onclick="runSimulation(1000000)">10連×100000回</button>
+            </div>
+        </div>
+
+        <div id="loadingMessage" class="loading" style="display: none;">
+            シミュレーション実行中...
+        </div>
+
+        <div id="results" style="display: none;">
+            <!-- 基本統計 -->
+            <h2>📊 基本統計（全体傾向）</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>総試行数</h3>
+                    <div class="stat-value" id="totalTrials">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>総排出数</h3>
+                    <div class="stat-value" id="totalCards">-</div>
+                </div>
+                <div class="stat-card">
+                    <h3>実行時間</h3>
+                    <div class="stat-value" id="executionTime">-</div>
+                </div>
+            </div>
+
+            <!-- レア度別排出率 -->
+            <h2>🎯 レア度別排出率</h2>
+            <table id="rarityTable">
+                <thead>
+                    <tr>
+                        <th>レア度</th>
+                        <th>設定率</th>
+                        <th>実際の排出率</th>
+                        <th>排出数</th>
+                        <th>差異</th>
+                    </tr>
+                </thead>
+                <tbody id="rarityTableBody">
+                </tbody>
+            </table>
+
+            <!-- グラフ -->
+            <h2>📈 レア度別排出数グラフ</h2>
+            <div class="chart-container">
+                <canvas id="rarityChart"></canvas>
+            </div>
+
+            <!-- キャラクター分析 -->
+            <h2>🧩 キャラクター別分析</h2>
+            <div id="characterAnalysis"></div>
+
+            <!-- 詳細統計 -->
+            <div class="analysis-section">
+                <h2>📋 詳細統計</h2>
+                <div class="stats-grid" id="detailedStats">
+                </div>
+            </div>
+
+            <!-- SSR以上の10連統計 -->
+            <div class="analysis-section">
+                <h2>⭐ SSR以上排出統計</h2>
+                <div class="stats-grid" id="ssrStats">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/gacha-simulator.js"></script>
+</body>
+</html>

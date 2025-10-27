@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>パチンコ シミュレーション</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="stylesheet" href="../css/gacha.css" />
+	<link rel="stylesheet" href="../css/pachinko.css" />
+</head>
+<body>
+	<!-- 統一ヘッダーの読み込み -->
+	<div id="header-placeholder"></div>
+	
+	<script>
+		// ヘッダーを動的に読み込み
+		fetch('header.html')
+			.then(response => response.text())
+			.then(data => {
+				document.getElementById('header-placeholder').innerHTML = data;
+				// 現在のページにactiveクラスを追加
+				const currentPage = 'pachinko.html';
+				const links = document.querySelectorAll('.nav-link');
+				links.forEach(link => {
+					if (link.getAttribute('href') === currentPage) {
+						link.classList.add('active');
+						link.style.fontWeight = 'bold';
+					}
+				});
+			});
+	</script>
+
+	<div class="container">
+		<h1>🎯 パチンコ シミュレーション</h1>
+
+		<div class="controls">
+			<h3>シミュレーション設定</h3>
+			<div class="button-group" style="gap:16px; align-items: end; flex-wrap: wrap;">
+				<div>
+					<label>貸玉モード</label><br />
+					<select id="mode" onchange="updateDynamicSelectors()">
+						<option value="">選択してください</option>
+						<option value="1">1円</option>
+						<option value="4">4円</option>
+					</select>
+				</div>
+				<div>
+					<label>出資金額（円/日）</label><br />
+					<select id="budgetPerDay"></select>
+				</div>
+				<div>
+					<label>日数</label><br />
+					<select id="days"></select>
+				</div>
+				<div>
+					<label>時短回数</label><br />
+					<select id="jitanSpins"></select>
+				</div>
+				<div>
+					<label>初当り確率</label><br />
+					<select id="hitProb">
+						<option value="">選択してください</option>
+						<option value="319">1/319</option>
+						<option value="199">1/199</option>
+						<option value="99">1/99</option>
+					</select>
+				</div>
+				<div>
+					<label>確変突入率</label><br />
+					<select id="kakuhenEntry">
+						<option value="">選択してください</option>
+						<option value="50">50%</option>
+						<option value="60">60%</option>
+						<option value="70">70%</option>
+						<option value="80">80%</option>
+					</select>
+				</div>
+				<div>
+					<label>確変中 大当たり確率</label><br />
+					<select id="kakuhenHitProb">
+						<option value="">選択してください</option>
+						<option value="30">1/30</option>
+						<option value="40">1/40</option>
+						<option value="50">1/50</option>
+						<option value="60">1/60</option>
+						<option value="70">1/70</option>
+						<option value="80">1/80</option>
+						<option value="90">1/90</option>
+					</select>
+				</div>
+				<div>
+					<label>継続率（ST）</label><br />
+					<select id="contST">
+						<option value="">選択してください</option>
+						<option value="60">60%</option>
+						<option value="70">70%</option>
+						<option value="80">80%</option>
+					</select>
+				</div>
+				<div>
+					<label>継続率（ループ型）</label><br />
+					<select id="contLoop">
+						<option value="">選択してください</option>
+						<option value="60">60%</option>
+						<option value="70">70%</option>
+						<option value="80">80%</option>
+					</select>
+				</div>
+				<div>
+					<button onclick="runPachinkoSimulation()">シミュレーション実行</button>
+				</div>
+			</div>
+			<div id="error" class="loading" style="display:none; color:#e74c3c; background:#ffecec; border-radius:8px;">入力エラーがあります。全ての項目を確認してください。</div>
+		</div>
+
+		<div id="results" style="display:none;">
+			<h2>📊 基本統計（集計）</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>項目</th>
+						<th>最小</th>
+						<th>最大</th>
+						<th>平均</th>
+						<th>中央値</th>
+						<th>最頻値</th>
+						<th>合計</th>
+					</tr>
+				</thead>
+				<tbody id="basicStatsBody"></tbody>
+			</table>
+
+			<h2>📈 当たり種別の分布</h2>
+			<div class="chart-container"><canvas id="typeDistChart"></canvas></div>
+			<div class="chart-container"><canvas id="entryRatesChart"></canvas></div>
+
+			<h2>🔁 連チャン数の分布</h2>
+			<div class="chart-container"><canvas id="renchanHistChart"></canvas></div>
+
+			<h2>💎 出玉推移</h2>
+			<div class="chart-container"><canvas id="payoutProgressChart"></canvas></div>
+
+			<h2>💰 収支推移</h2>
+			<div class="chart-container"><canvas id="profitChart"></canvas></div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="../js/pachinko.js"></script>
+</body>
+</html>

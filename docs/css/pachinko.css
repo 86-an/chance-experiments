@@ -1,0 +1,101 @@
+body {
+    background: linear-gradient(120deg, #f8fafc 0%, #e3e6f3 100%);
+}
+.container {
+    box-shadow: 0 8px 32px rgba(60,60,120,0.12);
+    border-radius: 18px;
+    background: #fff;
+    padding: 40px 32px;
+    margin-top: 32px;
+}
+h1 {
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    font-size: 2.6em;
+    letter-spacing: 0.05em;
+    color: #4a90e2;
+    margin-bottom: 24px;
+    text-shadow: 0 2px 8px rgba(74,144,226,0.08);
+}
+.controls {
+    background: linear-gradient(120deg, #e3e6f3 0%, #f8fafc 100%);
+    border-radius: 12px;
+    padding: 24px 18px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 8px rgba(60,60,120,0.06);
+}
+.button-group > div {
+    margin-bottom: 12px;
+}
+label {
+    font-weight: bold;
+    color: #357abd;
+    font-size: 1em;
+    margin-bottom: 4px;
+}
+select, input[type="number"] {
+    width: 120px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #b0c4de;
+    font-size: 1em;
+    background: #f8fafc;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    transition: border-color 0.2s;
+}
+select:focus, input[type="number"]:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+button {
+    background: linear-gradient(120deg, #4a90e2 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(74,144,226,0.12);
+    transition: background 0.2s, transform 0.2s;
+}
+button:hover {
+    background: linear-gradient(120deg, #764ba2 0%, #4a90e2 100%);
+    transform: translateY(-2px);
+}
+table {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(60,60,120,0.08);
+    margin-bottom: 32px;
+    font-size: 1em;
+}
+th, td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e3e6f3;
+}
+th {
+    background: linear-gradient(120deg, #4a90e2 0%, #357abd 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.05em;
+}
+tr:hover td {
+    background: #f8fafc;
+}
+.chart-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(60,60,120,0.08);
+    margin-bottom: 32px;
+    padding: 18px 10px;
+}
+.loading {
+    font-size: 1.1em;
+    color: #e74c3c;
+    background: #ffecec;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
