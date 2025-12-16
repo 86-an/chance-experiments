@@ -104,6 +104,11 @@
     color: #212529;
 }
 
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+}
+
 /* 注意事項セクション */
 .notice-section .alert {
     border: none;
